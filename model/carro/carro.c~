@@ -1,0 +1,83 @@
+#include <GL/glew.h>
+#include <GL/freeglut.h>
+#include <SOIL/SOIL.h>
+#include <math.h>
+#include "../props/props.h"
+#include "carro.h"
+
+Carro carro_criaCarro(){
+    Carro _novoCarro;
+
+    _novoCarro.dimensoes.width = 64;
+    _novoCarro.dimensoes.height = 64;
+    _novoCarro.dimensoes.depth = 64;
+    _novoCarro.posicao.x = 0;
+    _novoCarro.posicao.y = 0;
+    _novoCarro.posicao.z = 0;
+    _novoCarro.velocidade = 0;
+    _novoCarro.inclinacao = 0;
+    
+
+
+    // _novoCarro.textura = SOIL_load_OGL_texture(
+    //     "textures/....png",
+    //     SOIL_LOAD_AUTO,
+    //     SOIL_CREATE_NEW_ID,
+	// 	SOIL_FLAG_INVERT_Y
+	// );
+
+    return _novoCarro;
+}
+
+void carro_desenhaRoda(){
+
+}
+
+void carro_desenhaCarro(Carro *carro){
+    glColor3f(1,1,1);
+    
+    glPushMatrix();
+    //desenha lado
+    glBegin(GL_TRIANGLE_FAN);
+        glVertex3f(0,0,0);
+        glVertex3f(0,2,0);
+        glVertex3f(3,2,0);
+        glVertex3f(5,4,0);
+        glVertex3f(8,4,0);
+        glVertex3f(10,3,0);
+        glVertex3f(10,0,0);
+        glVertex3f(9,0,0);
+        glVertex3f(9,1.5,0);
+        glVertex3f(7,1.5,0);
+        glVertex3f(7,0,0);
+        glVertex3f(2.5,0,0);
+        glVertex3f(2.5,1.5,0);
+        glVertex3f(.5,1.5,0);
+        glVertex3f(.5,0,0);
+    glEnd();
+    
+    //desenha frente
+    glBegin(GL_TRIANGLE_FAN);
+        glVertex3f(0,0,0);
+        glVertex3f(0,2,0);
+        glVertex3f(3,2,0);
+        glVertex3f(5,4,0);
+        glVertex3f(5,4,4.5);
+        glVertex3f(3,2,4.5);
+        glVertex3f(0,2,4.5);
+        glVertex3f(0,0,4.5);
+    glEnd();
+
+    //desenha tras
+    glBegin(GL_TRIANGLE_FAN);
+        glVertex3f(10,0,0);
+        glVertex3f(10,3,0);
+        glVertex3f(8,4,0);
+        glVertex3f(8,4,4.5);
+        glVertex3f(10,3,4.5);
+        glVertex3f(10,0,4.5);
+    glEnd();
+
+
+    carro_desenhaRoda();   
+}
