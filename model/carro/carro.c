@@ -38,7 +38,7 @@ void carro_desenhaCarro(Carro *carro){
     glPushMatrix();
 
     glTranslated(carro->posicao.x,carro->posicao.y,carro->posicao.z);
-    glRotated(90,0,1,0);
+    glRotated(90+carro->inclinacao,0,1,0);
     //desenha lado
     glColor3f(1,1,1); //branco
     glBegin(GL_TRIANGLE_FAN);

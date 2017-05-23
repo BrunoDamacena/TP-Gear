@@ -12,6 +12,9 @@
 #include "model/pista/pista.h"
 #include "model/carro/carro.h"
 
+#define radianoParaGraus(radianos) (radianos * (180.0 / M_PI))
+#define grausParaRadianos(graus) ((graus * M_PI) / 180.0)
+
 // Objetos
 Pista pista;
 
@@ -53,35 +56,27 @@ void posiciona(){
         vzE=-vzE;
     }
 }
+
 void comandos(){
     if(keyState['w']==1 || keyState['W']==1){
-        centerZ++;
-        eyeZ++;
-        carro.posicao.z++;
-
-    }
-    if(keyState['s']==1 || keyState['S']==1){
-      if(centerZ>=0){
-        centerZ--;
-        eyeZ--;
-        carro.posicao.z--;
-      }
+        float valZ=cos(grausParaRadianos(carro.inclinacao));
+        float valX=sin(grausParaRadianos(carro.inclinacao));
+        if(valX > 0 && centerX>8) valX=0;
+        if(valX < 0 && centerX<-12) valX=0;
+        centerZ+=valZ;
+        eyeZ+=valZ;
+        centerX+=valX;
+        eyeX+=valX;
+        carro.posicao.z+=valZ;
+        carro.posicao.x+=valX;
     }
 
     if(keyState['A']==1 || keyState['a']==1){
-        if(centerX<=(25)){
-          centerX++;
-          eyeX++;
-          carro.posicao.x++;
-        }
+        if(carro.inclinacao < 30) carro.inclinacao++;
 
     }
     if(keyState['d']==1 || keyState['D']==1){
-      if(centerX>=-25){
-        centerX--;
-        eyeX--;
-        carro.posicao.x--;
-      }
+        if(carro.inclinacao > -30) carro.inclinacao--;
     }
 
     /*
@@ -96,6 +91,52 @@ void comandos(){
 
     */
 }
+// void comandos(){
+//     if(keyState['w']==1 || keyState['W']==1){
+//         int valZ=cos(carro.inclinacao);
+//         centerZ+=valZ;
+//         eyeZ+=valZ;
+//         carro.posicao.z+=valZ;
+
+//     }
+//     if(keyState['s']==1 || keyState['S']==1){
+//       if(centerZ>=0){
+//         centerZ--;
+//         eyeZ--;
+//         carro.posicao.z--;
+//       }
+//     }
+
+//     if(keyState['A']==1 || keyState['a']==1){
+//         if(centerX<=(25)){
+//         //   centerX++;
+//         //   eyeX++;
+//         //   carro.posicao.x++;
+//         if(carro.inclinacao > -30)carro.inclinacao--;
+//         }
+
+//     }
+//     if(keyState['d']==1 || keyState['D']==1){
+//       if(centerX>=-25){
+//         // centerX--;
+//         // eyeX--;
+//         // carro.posicao.x--;
+//         if(carro.inclinacao < 30)carro.inclinacao++;
+//       }
+//     }
+
+//     /*
+//     if(keyState['Q']==1 || keyState['q']==1){
+//         centerY++;
+//         eyeY++;
+//     }
+//     if(keyState['e']==1 || keyState['E']==1){
+//         centerY--;
+//         eyeY--;
+//     }
+
+//     */
+// }
 
 void atualiza(int idx){
     t = glutGet(GLUT_ELAPSED_TIME);
