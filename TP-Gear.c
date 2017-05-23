@@ -72,11 +72,11 @@ void comandos(){
     }
 
     if(keyState['A']==1 || keyState['a']==1){
-        if(carro.inclinacao < 30) carro.inclinacao++;
+        if(carro.inclinacao < 15) carro.inclinacao++;
 
     }
     if(keyState['d']==1 || keyState['D']==1){
-        if(carro.inclinacao > -30) carro.inclinacao--;
+        if(carro.inclinacao > -15) carro.inclinacao--;
     }
 
     /*
