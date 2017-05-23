@@ -9,9 +9,9 @@
 Pista criaPista(){
     Pista _novaPista;
 
-    _novaPista.dimensoes.width = 3;
+    _novaPista.dimensoes.width = 9;
     _novaPista.dimensoes.height = 0;
-    _novaPista.dimensoes.depth = 4;
+    _novaPista.dimensoes.depth = 10;
 
     _novaPista.textura = SOIL_load_OGL_texture(
         "textures/asphalt.png",
@@ -24,6 +24,7 @@ Pista criaPista(){
 }
 
 void desenhaPistaUnitaria(Pista *pista){
+    glColor3f(1,1,1);
     // Desenha a pista com a textura
     glEnable(GL_TEXTURE_2D);
 
@@ -31,15 +32,23 @@ void desenhaPistaUnitaria(Pista *pista){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glBegin(GL_TRIANGLE_FAN);
-            glVertex3f(-(pista->dimensoes.width/2),  0, (pista->dimensoes.depth/2));
-            glVertex3f((pista->dimensoes.width/2), 0, (pista->dimensoes.depth/2));
-            glVertex3f((pista->dimensoes.width/2),  0, -(pista->dimensoes.depth/2));
-            glVertex3f(-(pista->dimensoes.width/2),  0, -(pista->dimensoes.depth/2));
+            glTexCoord2f(0, 0); glVertex3f(-(pista->dimensoes.width/2),  0, (pista->dimensoes.depth/2));
+            glTexCoord2f(1, 0); glVertex3f((pista->dimensoes.width/2), 0, (pista->dimensoes.depth/2));
+            glTexCoord2f(1, 1); glVertex3f((pista->dimensoes.width/2),  0, -(pista->dimensoes.depth/2));
+            glTexCoord2f(0, 1); glVertex3f(-(pista->dimensoes.width/2),  0, -(pista->dimensoes.depth/2));
     glEnd();
 
     glDisable(GL_TEXTURE_2D);
 }
 
 void desenhaPista(Pista *pista){
-    desenhaPistaUnitaria(pista);
+    int i,k;
+    for(i=-1; i<2; i++){
+        for(k=-5; k<20; k++){
+            glPushMatrix();
+                glTranslated(i*(pista->dimensoes.width),0,k*(pista->dimensoes.depth));
+                desenhaPistaUnitaria(pista);
+            glPopMatrix();
+        }
+    }
 }

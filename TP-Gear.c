@@ -10,6 +10,7 @@
 #include <time.h>
 #include "model/props/props.h"
 #include "model/pista/pista.h"
+#include "model/carro/carro.h"
 
 // Objetos
 Pista pista;
@@ -23,14 +24,20 @@ int keyState[256];
 long double pyE = 3, ayE=-0.000008, pzE=5, vzE=-0.001, vyE=0;
 int a, qtempo=0, t;
 int tc1=0, tc2=1;
-double eyeX=0, eyeY=2, eyeZ=-10, centerX=0, centerY=0, centerZ=0, upX=0, upY=1, upZ=0;
+double eyeX=0, eyeY=10, eyeZ=-25, centerX=0, centerY=0, centerZ=0, upX=0, upY=1, upZ=0;
 int slices = 32;
 int stacks = 32;
+
+Carro carro;
 
 void desenhaCena(void){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glColor3d(0, 0, 0);
-    desenhaPista(&pista);
+    glPushMatrix();
+        glTranslatef(0, 0, carro.posicao.z-fmod(carro.posicao.z, pista.dimensoes.depth));
+        desenhaPista(&pista);
+    glPopMatrix();
+    carro_desenhaCarro(&carro);
     glutSwapBuffers();
 }
 
@@ -48,29 +55,46 @@ void posiciona(){
 }
 void comandos(){
     if(keyState['w']==1 || keyState['W']==1){
-        centerZ+=1;
-        eyeZ+=1;
+        centerZ++;
+        eyeZ++;
+        carro.posicao.z++;
+
     }
     if(keyState['s']==1 || keyState['S']==1){
-        centerZ-=1;
-        eyeZ-=1;
+      if(centerZ>=0){
+        centerZ--;
+        eyeZ--;
+        carro.posicao.z--;
+      }
     }
+
     if(keyState['A']==1 || keyState['a']==1){
-        centerX+=1;
-        eyeX+=1;
+        if(centerX<=(25)){
+          centerX++;
+          eyeX++;
+          carro.posicao.x++;
+        }
+
     }
     if(keyState['d']==1 || keyState['D']==1){
-        centerX-=1;
-        eyeX-=1;
+      if(centerX>=-25){
+        centerX--;
+        eyeX--;
+        carro.posicao.x--;
+      }
     }
+
+    /*
     if(keyState['Q']==1 || keyState['q']==1){
-        centerY+=1;
-        eyeY+=1;
+        centerY++;
+        eyeY++;
     }
     if(keyState['e']==1 || keyState['E']==1){
-        centerY-=1;
-        eyeY-=1;
+        centerY--;
+        eyeY--;
     }
+
+    */
 }
 
 void atualiza(int idx){
@@ -80,19 +104,18 @@ void atualiza(int idx){
     qtempo = glutGet(GLUT_ELAPSED_TIME);
     glLoadIdentity();
     gluLookAt(eyeX,eyeY,eyeZ,centerX,centerY,centerZ,upX,upY,upZ);
+    carro_desenhaCarro();
     glPopMatrix();
     glutPostRedisplay();
     glutTimerFunc(20, atualiza, 0);
 }
 
-void resize(int width, int height)
-{
-    float razaoaspecto = (float) width / (float) height;
-
-    glViewport(0, 0, width, height);
+void redimensiona(int w, int h){
+    float razaoaspecto = (float) w / (float) h;
+    glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glFrustum(-razaoaspecto, razaoaspecto, -1.0, 1.0, 2.0, 500.0);
+    glFrustum(-razaoaspecto, razaoaspecto, -1.0, 1.0, 2.0, 5000.0);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity() ;
@@ -111,6 +134,7 @@ void solta(unsigned char key,int x, int y){
 
 void inicializa(void){
     pista = criaPista();
+    carro = carro_criaCarro();
 }
 
 
@@ -127,13 +151,13 @@ float high_shininess[] = { 100.0f };
 int main(int argc, char *argv[])
 {
     glutInit(&argc, argv);
-    glutInitWindowSize(640,480);
+    glutInitWindowSize(windowWidth,windowHeight);
     glutInitWindowPosition(10,10);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 
     glutCreateWindow("TPGear - It was supposed to be a game about cars");
 
-    glutReshapeFunc(resize);
+    glutReshapeFunc(redimensiona);
     glutDisplayFunc(desenhaCena);
     glutKeyboardFunc(pressiona);
     glutKeyboardUpFunc(solta);
