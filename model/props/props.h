@@ -3,5 +3,5 @@ typedef struct vetor{
 } Vetor;
 
 typedef struct dimensoes{
-    double width, height;
+    double width, height, depth;
 } Dimensoes;

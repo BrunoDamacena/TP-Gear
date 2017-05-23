@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
     glutInitWindowPosition(10,10);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 
-    glutCreateWindow("");
+    glutCreateWindow("TPGear - It was supposed to be a game about cars");
 
     glutReshapeFunc(resize);
     glutDisplayFunc(desenhaCena);

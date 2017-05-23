@@ -1,7 +1,7 @@
 CC=gcc
 OPCOES_COMPILADOR=-I. -lglut -lGLU -lGLEW -lGL -lSOIL -lm -ISDL -lSDL_mixer `sdl-config --cflags --libs` 
-TODOS_ARQUIVOS_PONTOH = model/props/props.h model/pista/pista.h
-TODOS_ARQUIVOS_OBJ = TP-Gear.o model/props/props.o model/pista/pista.o
+TODOS_ARQUIVOS_PONTOH = model/props/props.h model/pista/pista.h model/carro/carro.h
+TODOS_ARQUIVOS_OBJ = TP-Gear.o model/props/props.o model/pista/pista.o model/carro/carro.o
 
 %.o: ../%.c $(TODOS_ARQUIVOS_PONTOH)
 	$(CC) -o $@ -c $< $(OPCOES_COMPILADOR)

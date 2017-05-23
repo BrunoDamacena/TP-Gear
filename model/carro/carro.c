@@ -10,22 +10,27 @@ Carro carro_criaCarro(){
 
     _novoCarro.dimensoes.width = 64;
     _novoCarro.dimensoes.height = 64;
+    _novoCarro.dimensoes.depth = 64;
     _novoCarro.posicao.x = 0;
     _novoCarro.posicao.y = 0;
     _novoCarro.posicao.z = 0;
     _novoCarro.velocidade = 0;
     _novoCarro.inclinacao = 0;
 
-    _novaBalista.textura = SOIL_load_OGL_texture(
-        "textures/....png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_INVERT_Y
-	);
+    // _novaBalista.textura = SOIL_load_OGL_texture(
+    //     "textures/....png",
+    //     SOIL_LOAD_AUTO,
+    //     SOIL_CREATE_NEW_ID,
+	// 	SOIL_FLAG_INVERT_Y
+	// );
 
     return _novoCarro;
 }
 
+void carro_desenhaRoda(){
+
+}
+
 void carro_desenhaCarro(Carro *carro){
-    
+    carro_desenhaRoda();   
 }

@@ -5,6 +5,10 @@
 #include "../props/props.h"
 #include "pista.h"
 
+void desenhaPistaUnitaria(){
+    // Desenha a pista com a textura
+}
+
 void desenhaPista(Vetor o, Vetor t){
     glPushMatrix();
     glTranslated(o.x, o.y, o.z);
