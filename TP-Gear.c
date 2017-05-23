@@ -11,6 +11,9 @@
 #include "model/props/props.h"
 #include "model/pista/pista.h"
 
+// Objetos
+Pista pista;
+
 int windowWidth = 1280;
 int windowHeight = 720;
 
@@ -27,9 +30,7 @@ int stacks = 32;
 void desenhaCena(void){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glColor3d(0, 0, 0);
-    Vetor origem = {0,0,0};
-    Vetor tamanhoPlano = {500, 0, 5000};
-    desenhaPista(origem, tamanhoPlano);
+    desenhaPista(&pista);
     glutSwapBuffers();
 }
 
@@ -107,7 +108,9 @@ void pressiona(unsigned char key,int x, int y){
 void solta(unsigned char key,int x, int y){
     keyState[key]=0;
 }
+
 void inicializa(void){
+    pista = criaPista();
 }
 
 
@@ -135,6 +138,7 @@ int main(int argc, char *argv[])
     glutKeyboardFunc(pressiona);
     glutKeyboardUpFunc(solta);
     glutTimerFunc(0, atualiza, 0);
+    inicializa();
 
     glClearColor(0.3,0.5,1,0);
     glEnable(GL_CULL_FACE);

@@ -1,22 +1,45 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 #include <SOIL/SOIL.h>
+#include <stdio.h>
 #include <math.h>
 #include "../props/props.h"
 #include "pista.h"
 
-void desenhaPistaUnitaria(){
-    // Desenha a pista com a textura
+Pista criaPista(){
+    Pista _novaPista;
+
+    _novaPista.dimensoes.width = 3;
+    _novaPista.dimensoes.height = 0;
+    _novaPista.dimensoes.depth = 4;
+
+    _novaPista.textura = SOIL_load_OGL_texture(
+        "textures/asphalt.png",
+        SOIL_LOAD_AUTO,
+        SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y
+	);
+
+    return _novaPista;
 }
 
-void desenhaPista(Vetor o, Vetor t){
-    glPushMatrix();
-    glTranslated(o.x, o.y, o.z);
+void desenhaPistaUnitaria(Pista *pista){
+    // Desenha a pista com a textura
+    glEnable(GL_TEXTURE_2D);
+
+    // WRAP para resolver linhas pretas entre as texturas
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glBegin(GL_TRIANGLE_FAN);
-            glVertex3f(o.x-t.x/2,  0, o.z);
-            glVertex3f(o.x-t.x/2, 0, o.z+t.z);
-            glVertex3f(o.x+t.x/2,  0, o.z+t.z);
-            glVertex3f(o.x+t.x/2,  0, o.z);
-        glEnd();
-    glPopMatrix();
+            glVertex3f(-(pista->dimensoes.width/2),  0, (pista->dimensoes.depth/2));
+            glVertex3f((pista->dimensoes.width/2), 0, (pista->dimensoes.depth/2));
+            glVertex3f((pista->dimensoes.width/2),  0, -(pista->dimensoes.depth/2));
+            glVertex3f(-(pista->dimensoes.width/2),  0, -(pista->dimensoes.depth/2));
+    glEnd();
+
+    glDisable(GL_TEXTURE_2D);
+}
+
+void desenhaPista(Pista *pista){
+    desenhaPistaUnitaria(pista);
 }
