@@ -32,10 +32,10 @@ void desenhaPistaUnitaria(Pista *pista){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glBegin(GL_TRIANGLE_FAN);
-            glTexCoord2f(0, 0); glVertex3f(-(pista->dimensoes.width/2),  0, (pista->dimensoes.depth/2));
-            glTexCoord2f(1, 0); glVertex3f((pista->dimensoes.width/2), 0, (pista->dimensoes.depth/2));
+            glTexCoord2f(0.5, 0.5); glVertex3f(-(pista->dimensoes.width/2),  0, (pista->dimensoes.depth/2));
+            glTexCoord2f(1, 0.5); glVertex3f((pista->dimensoes.width/2), 0, (pista->dimensoes.depth/2));
             glTexCoord2f(1, 1); glVertex3f((pista->dimensoes.width/2),  0, -(pista->dimensoes.depth/2));
-            glTexCoord2f(0, 1); glVertex3f(-(pista->dimensoes.width/2),  0, -(pista->dimensoes.depth/2));
+            glTexCoord2f(0.5, 1); glVertex3f(-(pista->dimensoes.width/2),  0, -(pista->dimensoes.depth/2));
     glEnd();
 
     glDisable(GL_TEXTURE_2D);
