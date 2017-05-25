@@ -54,7 +54,7 @@ void desenhaPistaUnitaria(Pista *pista, int last){
 void desenhaPista(Pista *pista){
     int i,k;
     for(i=-1; i<2; i++){
-        for(k=-5; k<20; k++){
+        for(k=-5; k<50; k++){
             glPushMatrix();
                 glTranslated(i*(pista->dimensoes.width),0,k*(pista->dimensoes.depth));
                 desenhaPistaUnitaria(pista, (i == -1));

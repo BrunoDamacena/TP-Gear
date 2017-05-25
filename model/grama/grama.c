@@ -45,7 +45,7 @@ void desenhaGramaUnitaria(Grama *grama){
 void desenhaGrama(Grama *grama){
     int i,k;
     for(i=-10; i<11; i++){
-        for(k=-5; k<20; k++){
+        for(k=-5; k<50; k++){
             glPushMatrix();
                 glTranslated(i*(grama->dimensoes.width),-.1,k*(grama->dimensoes.depth));
                 desenhaGramaUnitaria(grama);
