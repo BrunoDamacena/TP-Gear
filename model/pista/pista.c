@@ -23,7 +23,7 @@ Pista criaPista(){
     return _novaPista;
 }
 
-void desenhaPistaUnitaria(Pista *pista){
+void desenhaPistaUnitaria(Pista *pista, int last){
     glColor3f(1,1,1);
     // Desenha a pista com a textura
     glEnable(GL_TEXTURE_2D);
@@ -31,12 +31,21 @@ void desenhaPistaUnitaria(Pista *pista){
     // WRAP para resolver linhas pretas entre as texturas
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glBegin(GL_TRIANGLE_FAN);
-            glTexCoord2f(0.5, 0.5); glVertex3f(-(pista->dimensoes.width/2),  0, (pista->dimensoes.depth/2));
-            glTexCoord2f(1, 0.5); glVertex3f((pista->dimensoes.width/2), 0, (pista->dimensoes.depth/2));
-            glTexCoord2f(1, 1); glVertex3f((pista->dimensoes.width/2),  0, -(pista->dimensoes.depth/2));
-            glTexCoord2f(0.5, 1); glVertex3f(-(pista->dimensoes.width/2),  0, -(pista->dimensoes.depth/2));
-    glEnd();
+    if(!last){
+        glBegin(GL_TRIANGLE_FAN);
+                glTexCoord2f(0.5, 0.5); glVertex3f(-(pista->dimensoes.width/2),  0, (pista->dimensoes.depth/2));
+                glTexCoord2f(1, 0.5); glVertex3f((pista->dimensoes.width/2), 0, (pista->dimensoes.depth/2));
+                glTexCoord2f(1, 1); glVertex3f((pista->dimensoes.width/2),  0, -(pista->dimensoes.depth/2));
+                glTexCoord2f(0.5, 1); glVertex3f(-(pista->dimensoes.width/2),  0, -(pista->dimensoes.depth/2));
+        glEnd();
+    } else {
+        glBegin(GL_TRIANGLE_FAN);
+                glTexCoord2f(1, 0.5); glVertex3f(-(pista->dimensoes.width/2),  0, (pista->dimensoes.depth/2));
+                glTexCoord2f(0.6, 0.5); glVertex3f((pista->dimensoes.width/2), 0, (pista->dimensoes.depth/2));
+                glTexCoord2f(0.6, 1); glVertex3f((pista->dimensoes.width/2),  0, -(pista->dimensoes.depth/2));
+                glTexCoord2f(1, 1); glVertex3f(-(pista->dimensoes.width/2),  0, -(pista->dimensoes.depth/2));
+        glEnd();
+    }
 
     glDisable(GL_TEXTURE_2D);
 }
@@ -47,7 +56,7 @@ void desenhaPista(Pista *pista){
         for(k=-5; k<20; k++){
             glPushMatrix();
                 glTranslated(i*(pista->dimensoes.width),0,k*(pista->dimensoes.depth));
-                desenhaPistaUnitaria(pista);
+                desenhaPistaUnitaria(pista, (i == -1));
             glPopMatrix();
         }
     }

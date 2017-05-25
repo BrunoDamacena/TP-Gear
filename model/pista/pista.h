@@ -4,5 +4,5 @@ typedef struct pista{
 } Pista;
 
 Pista criaPista();
-void desenhaPistaUnitaria(Pista *pista);
+void desenhaPistaUnitaria(Pista *pista, int last);
 void desenhaPista(Pista *pista);

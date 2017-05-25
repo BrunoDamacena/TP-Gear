@@ -39,19 +39,6 @@ void desenhaCena(void){
 }
 
 void comandos(){
-    if(keyState['w']==1 || keyState['W']==1){
-        float valZ=cos(grausParaRadianos(carro.inclinacao));
-        float valX=sin(grausParaRadianos(carro.inclinacao));
-        if(valX > 0 && centerX>8) valX=0;
-        if(valX < 0 && centerX<-12) valX=0;
-        centerZ+=valZ;
-        eyeZ+=valZ;
-        centerX+=valX;
-        eyeX+=valX;
-        carro.posicao.z+=valZ;
-        carro.posicao.x+=valX;
-    }
-
     if(keyState['A']==1 || keyState['a']==1){
         if(carro.inclinacao < 15) carro.inclinacao++;
 
@@ -61,8 +48,22 @@ void comandos(){
     }
 }
 
+void atualizaPosicao(){
+    float valZ=cos(grausParaRadianos(carro.inclinacao));
+    float valX=sin(grausParaRadianos(carro.inclinacao));
+    if(valX > 0 && centerX>8) valX=0;
+    if(valX < 0 && centerX<-12) valX=0;
+    centerZ+=valZ;
+    eyeZ+=valZ;
+    centerX+=valX;
+    eyeX+=valX;
+    carro.posicao.z+=valZ;
+    carro.posicao.x+=valX;
+}
+
 void atualiza(int idx){
     comandos();
+    atualizaPosicao();
     glLoadIdentity();
     gluLookAt(eyeX,eyeY,eyeZ,centerX,centerY,centerZ,upX,upY,upZ);
     carro_desenhaCarro();

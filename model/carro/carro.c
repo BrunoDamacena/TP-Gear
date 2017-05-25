@@ -37,7 +37,7 @@ void carro_desenhaRoda(){
 void carro_desenhaCarro(Carro *carro){
     glPushMatrix();
 
-    glTranslated(carro->posicao.x,carro->posicao.y,carro->posicao.z);
+    glTranslated(carro->posicao.x-(4.5/2),carro->posicao.y,carro->posicao.z);
     glRotated(90+carro->inclinacao,0,1,0);
     //desenha lado
     glColor3f(1,1,1); //branco
