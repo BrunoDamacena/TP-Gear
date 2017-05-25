@@ -52,6 +52,11 @@ void comandos(){
     if(keyState['d']==1 || keyState['D']==1){
         if(carro.inclinacao > -15) carro.inclinacao--;
     }
+
+    if(!(keyState['A']==1 || keyState['a']==1) && !(keyState['d']==1 || keyState['D']==1)){
+        if(carro.inclinacao < 0) carro.inclinacao++;
+        if(carro.inclinacao > 0) carro.inclinacao--;
+    }
 }
 
 void atualizaPosicao(){
