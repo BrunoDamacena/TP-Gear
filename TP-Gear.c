@@ -51,8 +51,8 @@ void comandos(){
 void atualizaPosicao(){
     float valZ=cos(grausParaRadianos(carro.inclinacao));
     float valX=sin(grausParaRadianos(carro.inclinacao));
-    if(valX > 0 && centerX>8) valX=0;
-    if(valX < 0 && centerX<-12) valX=0;
+    if(valX > 0 && carro.posicao.x>10) valX=0;
+    if(valX < 0 && carro.posicao.x<-10) valX=0;
     centerZ+=valZ;
     eyeZ+=valZ;
     centerX+=valX;
