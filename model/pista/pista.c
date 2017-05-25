@@ -31,6 +31,7 @@ void desenhaPistaUnitaria(Pista *pista, int last){
     // WRAP para resolver linhas pretas entre as texturas
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glBindTexture(GL_TEXTURE_2D, pista->textura);
     if(!last){
         glBegin(GL_TRIANGLE_FAN);
                 glTexCoord2f(0.5, 0.5); glVertex3f(-(pista->dimensoes.width/2),  0, (pista->dimensoes.depth/2));

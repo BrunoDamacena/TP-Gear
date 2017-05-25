@@ -8,6 +8,7 @@
 #include <string.h>
 #include <time.h>
 #include "model/props/props.h"
+#include "model/grama/grama.h"
 #include "model/pista/pista.h"
 #include "model/carro/carro.h"
 
@@ -16,6 +17,7 @@
 
 // Objetos
 Pista pista;
+Grama grama;
 
 int windowWidth = 1280;
 int windowHeight = 720;
@@ -30,6 +32,10 @@ Carro carro;
 void desenhaCena(void){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glColor3d(0, 0, 0);
+    glPushMatrix();
+        glTranslatef(0, 0, carro.posicao.z-fmod(carro.posicao.z, grama.dimensoes.depth));
+        desenhaGrama(&grama);
+    glPopMatrix();
     glPushMatrix();
         glTranslatef(0, 0, carro.posicao.z-fmod(carro.posicao.z, pista.dimensoes.depth));
         desenhaPista(&pista);
@@ -95,6 +101,7 @@ void solta(unsigned char key,int x, int y){
 }
 
 void inicializa(void){
+    grama = criaGrama();
     pista = criaPista();
     carro = carro_criaCarro();
 }
