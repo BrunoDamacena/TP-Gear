@@ -1,5 +1,3 @@
-#define CARRO_VELOCIDADE_MAXIMA 25
-
 typedef struct roda{
     double raio;
 } Roda;

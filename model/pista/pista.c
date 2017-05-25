@@ -11,7 +11,7 @@ Pista criaPista(){
 
     _novaPista.dimensoes.width = 9;
     _novaPista.dimensoes.height = 0;
-    _novaPista.dimensoes.depth = 10;
+    _novaPista.dimensoes.depth = 5;
 
     _novaPista.textura = SOIL_load_OGL_texture(
         "textures/asphalt.png",
@@ -54,7 +54,7 @@ void desenhaPistaUnitaria(Pista *pista, int last){
 void desenhaPista(Pista *pista){
     int i,k;
     for(i=-1; i<2; i++){
-        for(k=-5; k<50; k++){
+        for(k=-5; k<100; k++){
             glPushMatrix();
                 glTranslated(i*(pista->dimensoes.width),0,k*(pista->dimensoes.depth));
                 desenhaPistaUnitaria(pista, (i == -1));

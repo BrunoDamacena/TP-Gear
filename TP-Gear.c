@@ -11,13 +11,16 @@
 #include "model/grama/grama.h"
 #include "model/pista/pista.h"
 #include "model/carro/carro.h"
+#include "model/muro/muro.h"
 
 #define radianoParaGraus(radianos) (radianos * (180.0 / M_PI))
 #define grausParaRadianos(graus) ((graus * M_PI) / 180.0)
 
 // Objetos
 Pista pista;
+Carro carro;
 Grama grama;
+Muro muro;
 
 int windowWidth = 1280;
 int windowHeight = 720;
@@ -27,7 +30,7 @@ int keyState[256];
 //Variáveis look at
 double eyeX=0, eyeY=10, eyeZ=-25, centerX=0, centerY=0, centerZ=0, upX=0, upY=1, upZ=0;
 
-Carro carro;
+
 
 void desenhaCena(void){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -40,17 +43,25 @@ void desenhaCena(void){
         glTranslatef(0, 0, carro.posicao.z-fmod(carro.posicao.z, pista.dimensoes.depth));
         desenhaPista(&pista);
     glPopMatrix();
+    glPushMatrix();
+        glTranslatef((pista.dimensoes.width*2)-(muro.dimensoes.width), 0, carro.posicao.z-fmod(carro.posicao.z, muro.dimensoes.depth));
+        muro_desenhaMuro(&muro);
+    glPopMatrix();
+    glPushMatrix();
+        glTranslatef((-pista.dimensoes.width*2)+(muro.dimensoes.width), 0, carro.posicao.z-fmod(carro.posicao.z, muro.dimensoes.depth));
+        muro_desenhaMuro(&muro);
+    glPopMatrix();
     carro_desenhaCarro(&carro);
     glutSwapBuffers();
 }
 
 void comandos(){
     if(keyState['A']==1 || keyState['a']==1){
-        if(carro.inclinacao < 15) carro.inclinacao++;
+        if(carro.inclinacao < 16) carro.inclinacao+=2;
 
     }
     if(keyState['d']==1 || keyState['D']==1){
-        if(carro.inclinacao > -15) carro.inclinacao--;
+        if(carro.inclinacao > -16) carro.inclinacao-=2;
     }
 
     if(!(keyState['A']==1 || keyState['a']==1) && !(keyState['d']==1 || keyState['D']==1)){
@@ -109,6 +120,7 @@ void inicializa(void){
     grama = criaGrama();
     pista = criaPista();
     carro = carro_criaCarro();
+    muro = muro_criaMuro();
 }
 
 
