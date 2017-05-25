@@ -2,7 +2,6 @@
 #include <GL/freeglut.h>
 #include <SOIL/SOIL.h>
 #include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
 #include <stdio.h>
 #include <math.h>
@@ -24,12 +23,7 @@ int windowHeight = 720;
 int keyState[256];
 
 //Variáveis look at
-long double pyE = 3, ayE=-0.000008, pzE=5, vzE=-0.001, vyE=0;
-int a, qtempo=0, t;
-int tc1=0, tc2=1;
 double eyeX=0, eyeY=10, eyeZ=-25, centerX=0, centerY=0, centerZ=0, upX=0, upY=1, upZ=0;
-int slices = 32;
-int stacks = 32;
 
 Carro carro;
 
@@ -42,19 +36,6 @@ void desenhaCena(void){
     glPopMatrix();
     carro_desenhaCarro(&carro);
     glutSwapBuffers();
-}
-
-void posiciona(){
-    pzE-=vzE*(t-qtempo);
-    pyE+=vyE*(t-qtempo);
-    if(pyE<1 && vyE < 0){ // só inverte se tiver embaixo do plano e descendo
-        vyE=-vyE;
-    }else {
-		vyE+=ayE*(t-qtempo); // soh altera a V se n tiver invertido -
-	}
-    if(pzE<-50 || pzE>-5){
-        vzE=-vzE;
-    }
 }
 
 void comandos(){
@@ -78,71 +59,10 @@ void comandos(){
     if(keyState['d']==1 || keyState['D']==1){
         if(carro.inclinacao > -15) carro.inclinacao--;
     }
-
-    /*
-    if(keyState['Q']==1 || keyState['q']==1){
-        centerY++;
-        eyeY++;
-    }
-    if(keyState['e']==1 || keyState['E']==1){
-        centerY--;
-        eyeY--;
-    }
-
-    */
 }
-// void comandos(){
-//     if(keyState['w']==1 || keyState['W']==1){
-//         int valZ=cos(carro.inclinacao);
-//         centerZ+=valZ;
-//         eyeZ+=valZ;
-//         carro.posicao.z+=valZ;
-
-//     }
-//     if(keyState['s']==1 || keyState['S']==1){
-//       if(centerZ>=0){
-//         centerZ--;
-//         eyeZ--;
-//         carro.posicao.z--;
-//       }
-//     }
-
-//     if(keyState['A']==1 || keyState['a']==1){
-//         if(centerX<=(25)){
-//         //   centerX++;
-//         //   eyeX++;
-//         //   carro.posicao.x++;
-//         if(carro.inclinacao > -30)carro.inclinacao--;
-//         }
-
-//     }
-//     if(keyState['d']==1 || keyState['D']==1){
-//       if(centerX>=-25){
-//         // centerX--;
-//         // eyeX--;
-//         // carro.posicao.x--;
-//         if(carro.inclinacao < 30)carro.inclinacao++;
-//       }
-//     }
-
-//     /*
-//     if(keyState['Q']==1 || keyState['q']==1){
-//         centerY++;
-//         eyeY++;
-//     }
-//     if(keyState['e']==1 || keyState['E']==1){
-//         centerY--;
-//         eyeY--;
-//     }
-
-//     */
-// }
 
 void atualiza(int idx){
-    t = glutGet(GLUT_ELAPSED_TIME);
-    posiciona();
     comandos();
-    qtempo = glutGet(GLUT_ELAPSED_TIME);
     glLoadIdentity();
     gluLookAt(eyeX,eyeY,eyeZ,centerX,centerY,centerZ,upX,upY,upZ);
     carro_desenhaCarro();
