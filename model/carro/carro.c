@@ -27,6 +27,20 @@ Carro carro_criaCarro(){
 	 	SOIL_FLAG_INVERT_Y
 	 );
 
+     _novoCarro.textura[1] = SOIL_load_OGL_texture(
+         "textures/carro/tras.png",
+         SOIL_LOAD_AUTO,
+         SOIL_CREATE_NEW_ID,
+       SOIL_FLAG_INVERT_Y
+    );
+
+    _novoCarro.textura[2] = SOIL_load_OGL_texture(
+        "textures/carro/vidro_tras.png",
+        SOIL_LOAD_AUTO,
+        SOIL_CREATE_NEW_ID,
+      SOIL_FLAG_INVERT_Y
+   );
+
     return _novoCarro;
 }
 
@@ -119,23 +133,30 @@ void carro_desenhaCarro(Carro *carro){
         glVertex3f(2.5,2,0);
     glEnd();
 
+    glEnable(GL_BLEND);
+
+    glBindTexture(GL_TEXTURE_2D, carro->textura[1]);
+
     //desenha tras
-    glColor3f(0,1,0); //verde
+    glColor3f(1,1,1); //branco
     glBegin(GL_TRIANGLE_FAN);
-        glVertex3f(10,0,0);
-        glVertex3f(10,3,0);
-        glVertex3f(10,3,4.5);
-        glVertex3f(10,0,4.5);
+        glTexCoord2f(1, 0); glVertex3f(10,0,0);
+        glTexCoord2f(1, 1); glVertex3f(10,3,0);
+        glTexCoord2f(0, 1); glVertex3f(10,3,4.5);
+        glTexCoord2f(0, 0); glVertex3f(10,0,4.5);
     glEnd();
 
+    glBindTexture(GL_TEXTURE_2D, carro->textura[2]);
+
     //desenha vidro de tras
-    glColor3f(0.3,0.3,0.3); //quase preto
     glBegin(GL_TRIANGLE_FAN);
-        glVertex3f(10,3,0);
-        glVertex3f(8,4,0);
-        glVertex3f(8,4,4.5);
-        glVertex3f(10,3,4.5);
+        glTexCoord2f(1, 0); glVertex3f(10,3,0);
+        glTexCoord2f(1, 1); glVertex3f(8,4,0);
+        glTexCoord2f(0, 1); glVertex3f(8,4,4.5);
+        glTexCoord2f(0, 0); glVertex3f(10,3,4.5);
     glEnd();
+
+    glDisable(GL_BLEND);
 
     //desenha teto
     glColor3f(0.498,1,0.831); //azul marinho
