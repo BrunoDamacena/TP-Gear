@@ -55,13 +55,13 @@ void carro_desenhaRoda(){
     printf("Hello");
 }
 
-void carro_desenhaCarro(Carro *carro){
+void carro_desenhaCarro(Carro *carro, int corR, int corG, int corB){
     glPushMatrix();
 
     glTranslated(carro->posicao.x-(4.5/2),carro->posicao.y+0.5,carro->posicao.z);
     glRotated(90+carro->inclinacao,0,1,0);
     //desenha lado
-    glColor3f(1,1,1); //branco
+    glColor3f(corR,corG,corB); 
 
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_BLEND);
@@ -113,7 +113,7 @@ void carro_desenhaCarro(Carro *carro){
     glBindTexture(GL_TEXTURE_2D, carro->textura[1]);
 
     //desenha tras
-    glColor3f(1,1,1); //branco
+    glColor3f(corR,corG,corB); 
     glBegin(GL_TRIANGLE_FAN);
         glTexCoord2f(1, 0); glVertex3f(10,0,0);
         glTexCoord2f(1, 1); glVertex3f(10,3,0);
@@ -124,6 +124,8 @@ void carro_desenhaCarro(Carro *carro){
     glBindTexture(GL_TEXTURE_2D, carro->textura[2]);
 
     //desenha vidro de tras
+
+    glColor3f(1,1,1); 
     glBegin(GL_TRIANGLE_FAN);
         glTexCoord2f(1, 0); glVertex3f(10,3,0);
         glTexCoord2f(1, 1); glVertex3f(8,4,0);
@@ -135,6 +137,8 @@ void carro_desenhaCarro(Carro *carro){
     glBindTexture(GL_TEXTURE_2D, carro->textura[3]);
 
     //desenha teto
+
+    glColor3f(corR,corG,corB); 
     glBegin(GL_TRIANGLE_FAN);
         glTexCoord2f(1, 0); glVertex3f(5,4,4.5);
         glTexCoord2f(1, 1); glVertex3f(8,4,4.5);
@@ -144,6 +148,7 @@ void carro_desenhaCarro(Carro *carro){
 
 
     //desenha capo
+    glColor3f(corR,corG,corB); 
     glBegin(GL_TRIANGLE_FAN);
         glTexCoord2f(1, 0); glVertex3f(0,2,4.5);
         glTexCoord2f(1, 1); glVertex3f(2.5,2,4.5);

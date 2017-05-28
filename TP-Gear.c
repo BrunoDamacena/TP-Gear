@@ -60,11 +60,11 @@ void desenhaCena(void){
         count++;
         glPushMatrix();
             glTranslatef(_carros->carro.posicao.x, _carros->carro.posicao.y, _carros->carro.posicao.z);
-            carro_desenhaCarro(&(_carros->carro));
+            carro_desenhaCarro(&(_carros->carro), (float)(count%3 +1)/4, (float)(count%5 +1)/6, (float)(count%2 +1)/3);
         glPopMatrix();
         _carros = _carros->proximo;
     }
-    carro_desenhaCarro(&carro);
+    carro_desenhaCarro(&carro, 1, 1, 0);
     glutSwapBuffers();
 }
 
@@ -101,7 +101,6 @@ void atualiza(int idx){
     atualizaPosicao();
     glLoadIdentity();
     gluLookAt(eyeX,eyeY,eyeZ,centerX,centerY,centerZ,upX,upY,upZ);
-    carro_desenhaCarro();
     glPopMatrix();
     glutPostRedisplay();
     glutTimerFunc(20, atualiza, 0);
