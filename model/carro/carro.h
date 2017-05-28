@@ -11,5 +11,14 @@ typedef struct carro{
     Roda roda;
 } Carro;
 
+typedef struct listaCarro{
+    Carro carro;
+    struct listaCarro *proximo;
+} ListaCarro;
+
 Carro carro_criaCarro();
 void carro_desenhaCarro();
+
+
+ListaCarro *listacarro_adicionaCarro(ListaCarro *lista, Carro carro);
+ListaCarro *listacarro_deletaCarro(ListaCarro *lista, Carro *carro);

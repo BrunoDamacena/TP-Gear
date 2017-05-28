@@ -9,8 +9,8 @@
 #include <time.h>
 #include "model/props/props.h"
 #include "model/grama/grama.h"
-#include "model/pista/pista.h"
 #include "model/carro/carro.h"
+#include "model/pista/pista.h"
 #include "model/muro/muro.h"
 
 #define radianoParaGraus(radianos) (radianos * (180.0 / M_PI))
@@ -19,11 +19,14 @@
 // Objetos
 Pista pista;
 Carro carro;
+ListaCarro *listaCarros;
 Grama grama;
 Muro muro;
 
 int windowWidth = 1280;
 int windowHeight = 720;
+
+int gameMatrix[3][100]; // PISTA E PROFUNDIDADE
 
 int keyState[256];
 
@@ -51,17 +54,27 @@ void desenhaCena(void){
         glTranslatef((-pista.dimensoes.width*2)+(muro.dimensoes.width), 0, carro.posicao.z-fmod(carro.posicao.z, muro.dimensoes.depth));
         muro_desenhaMuro(&muro);
     glPopMatrix();
+    ListaCarro *_carros = listaCarros;
+    int count=0;
+    while(_carros != NULL){
+        count++;
+        glPushMatrix();
+            glTranslatef(_carros->carro.posicao.x, _carros->carro.posicao.y, _carros->carro.posicao.z);
+            carro_desenhaCarro(&(_carros->carro));
+        glPopMatrix();
+        _carros = _carros->proximo;
+    }
     carro_desenhaCarro(&carro);
     glutSwapBuffers();
 }
 
 void comandos(){
     if(keyState['A']==1 || keyState['a']==1){
-        if(carro.inclinacao < 16) carro.inclinacao+=2;
+        if(carro.inclinacao < 24) carro.inclinacao+=2;
 
     }
     if(keyState['d']==1 || keyState['D']==1){
-        if(carro.inclinacao > -16) carro.inclinacao-=2;
+        if(carro.inclinacao > -24) carro.inclinacao-=2;
     }
 
     if(!(keyState['A']==1 || keyState['a']==1) && !(keyState['d']==1 || keyState['D']==1)){
@@ -117,10 +130,52 @@ void solta(unsigned char key,int x, int y){
 }
 
 void inicializa(void){
+    int i, k;
+    for(i=0;i<3;i++){
+        for(k=0;k<100;k++){
+            gameMatrix[i][k] = 0; // Não tem nada no jogo ainda
+        }
+    }
+
+    for(k=0;k<100; k++){
+        if(k%5 == 4){
+            if(k%3 == 0){
+                gameMatrix[0][k] = 1;
+                gameMatrix[1][k] = 0;
+                gameMatrix[2][k] = 1;
+            }
+
+            if(k%3 == 1){
+                gameMatrix[0][k] = 0;
+                gameMatrix[1][k] = 1;
+                gameMatrix[2][k] = 1;             
+            }
+
+            if(k%3 == 2){
+                gameMatrix[0][k] = 1;
+                gameMatrix[1][k] = 1;
+                gameMatrix[2][k] = 0;             
+            }
+        }
+    }
+
     grama = criaGrama();
     pista = criaPista();
     carro = carro_criaCarro();
+    gameMatrix[1][0] = 1; // O carro inicia no meio
     muro = muro_criaMuro();
+
+
+    for(i=0;i<3;i++){
+        for(k=1;k<100;k++){
+            if(gameMatrix[i][k] == 1){
+                Carro _novoCarro = carro_criaCarro();
+                _novoCarro.posicao.x = (i-1)*(pista.dimensoes.width/2);
+                _novoCarro.posicao.z = k*pista.dimensoes.depth;
+                listaCarros = listacarro_adicionaCarro(listaCarros, _novoCarro);
+            }
+        }
+    }
 }
 
 

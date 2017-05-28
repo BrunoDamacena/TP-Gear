@@ -157,3 +157,27 @@ void carro_desenhaCarro(Carro *carro){
 
     glPopMatrix();
 }
+
+
+ListaCarro *listacarro_adicionaCarro(ListaCarro *lista, Carro carro){
+    ListaCarro *_novaLista = (ListaCarro *) malloc(sizeof(ListaCarro));
+    _novaLista->carro = carro;
+    _novaLista->proximo = lista;
+    return _novaLista;
+}
+
+ListaCarro *listacarro_deletaCarro(ListaCarro *lista, Carro *carro){
+    // Percorre a lista até achar o elemento
+    ListaCarro *_elementoAnterior = NULL;
+    ListaCarro *_primeiroElemento = lista; // Salva o primeiro elemento
+    while(lista != NULL){
+        if(&lista->carro == carro){
+            if(_elementoAnterior == NULL) return lista->proximo; // Caso o anterior seja NULL apenas retorna
+            _elementoAnterior->proximo = lista->proximo; // Pula o elemento atual e retorna a posição inicial da lista
+            return _primeiroElemento;
+        }
+        _elementoAnterior = lista;
+        lista = lista->proximo;
+    }
+    return _primeiroElemento; // Caso não tenha encontrado nada só retorna o primeiro elemento
+}
