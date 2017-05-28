@@ -41,6 +41,13 @@ Carro carro_criaCarro(){
       SOIL_FLAG_INVERT_Y
    );
 
+   _novoCarro.textura[3] = SOIL_load_OGL_texture(
+       "textures/carro/common.png",
+       SOIL_LOAD_AUTO,
+       SOIL_CREATE_NEW_ID,
+     SOIL_FLAG_INVERT_Y
+  );
+
     return _novoCarro;
 }
 
@@ -103,38 +110,6 @@ void carro_desenhaCarro(Carro *carro){
         glTexCoord2f(0, 0); glVertex3f(0,0,4.5);
     glEnd();
 
-    glDisable(GL_BLEND);
-
-
-    //desenha frente
-    glColor3f(1,0,0); //vermelho
-    glBegin(GL_TRIANGLE_FAN);
-        glVertex3f(0,0,4.5);
-        glVertex3f(0,2,4.5);
-        glVertex3f(0,2,0);
-        glVertex3f(0,0,0);
-    glEnd();
-
-    //desenha capo
-    glColor3f(0,0,1); //azul
-    glBegin(GL_TRIANGLE_FAN);
-        glVertex3f(0,2,4.5);
-        glVertex3f(2.5,2,4.5);
-        glVertex3f(2.5,2,0);
-        glVertex3f(0,2,0);
-    glEnd();
-
-    //desenha vidro da frente
-    glColor3f(0.3,0.3,0.3); //cinza
-    glBegin(GL_TRIANGLE_FAN);
-        glVertex3f(2.5,2,4.5);
-        glVertex3f(5,4,4.5);
-        glVertex3f(5,4,0);
-        glVertex3f(2.5,2,0);
-    glEnd();
-
-    glEnable(GL_BLEND);
-
     glBindTexture(GL_TEXTURE_2D, carro->textura[1]);
 
     //desenha tras
@@ -156,16 +131,29 @@ void carro_desenhaCarro(Carro *carro){
         glTexCoord2f(0, 0); glVertex3f(10,3,4.5);
     glEnd();
 
-    glDisable(GL_BLEND);
+
+    glBindTexture(GL_TEXTURE_2D, carro->textura[3]);
 
     //desenha teto
-    glColor3f(0.498,1,0.831); //azul marinho
     glBegin(GL_TRIANGLE_FAN);
-        glVertex3f(5,4,4.5);
-        glVertex3f(8,4,4.5);
-        glVertex3f(8,4,0);
-        glVertex3f(5,4,0);
+        glTexCoord2f(1, 0); glVertex3f(5,4,4.5);
+        glTexCoord2f(1, 1); glVertex3f(8,4,4.5);
+        glTexCoord2f(0, 1); glVertex3f(8,4,0);
+        glTexCoord2f(0, 0); glVertex3f(5,4,0);
     glEnd();
+
+
+    //desenha capo
+    glBegin(GL_TRIANGLE_FAN);
+        glTexCoord2f(1, 0); glVertex3f(0,2,4.5);
+        glTexCoord2f(1, 1); glVertex3f(2.5,2,4.5);
+        glTexCoord2f(0, 1); glVertex3f(2.5,2,0);
+        glTexCoord2f(0, 0); glVertex3f(0,2,0);
+    glEnd();
+
+
+
+    glDisable(GL_BLEND);
 
     glPopMatrix();
 }

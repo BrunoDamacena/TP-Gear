@@ -7,7 +7,7 @@ typedef struct carro{
     Dimensoes dimensoes;
     double velocidade;
     double inclinacao;
-    int textura[8];
+    int textura[3];
     Roda roda;
 } Carro;
 
