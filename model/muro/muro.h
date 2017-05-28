@@ -1,6 +1,6 @@
 typedef struct muro{
     Dimensoes dimensoes;
-    int textura[2];
+    int textura;
 } Muro;
 
 Muro muro_criaMuro();
