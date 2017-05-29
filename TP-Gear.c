@@ -59,7 +59,7 @@ void desenhaCena(void){
     while(_carros != NULL){
         count++;
         glPushMatrix();
-            glTranslatef(_carros->carro.posicao.x, _carros->carro.posicao.y, _carros->carro.posicao.z);
+            //glTranslatef(_carros->carro.posicao.x, _carros->carro.posicao.y, _carros->carro.posicao.z-(_carros->carro.dimensoes.depth));
             carro_desenhaCarro(&(_carros->carro), (float)(count%3 +1)/4, (float)(count%5 +1)/6, (float)(count%2 +1)/3);
         glPopMatrix();
         _carros = _carros->proximo;
@@ -146,7 +146,7 @@ void inicializa(void){
     }
 
     for(k=0;k<100; k++){
-        if(k%5 == 4){
+        if(k%10 == 9){
             if(k%3 == 0){
                 gameMatrix[0][k] = 1;
                 gameMatrix[1][k] = 0;
@@ -178,7 +178,7 @@ void inicializa(void){
         for(k=1;k<100;k++){
             if(gameMatrix[i][k] == 1){
                 Carro _novoCarro = carro_criaCarro();
-                _novoCarro.posicao.x = (i-1)*(pista.dimensoes.width/2);
+                _novoCarro.posicao.x = (i-1)*(pista.dimensoes.width);
                 _novoCarro.posicao.z = k*pista.dimensoes.depth;
                 listaCarros = listacarro_adicionaCarro(listaCarros, _novoCarro);
             }

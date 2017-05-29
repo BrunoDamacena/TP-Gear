@@ -186,5 +186,10 @@ int checaColisao(Carro c1, Carro c2){
     distancia.x = c1.posicao.x - c2.posicao.x;
     distancia.y = c1.posicao.y - c2.posicao.y;
     distancia.z = c1.posicao.z - c2.posicao.z;
-    return (vetor_calculaModulo(distancia)<=0);
+    if(distancia.x < 0) distancia.x=distancia.x*-1;
+    if(distancia.z < 0) distancia.z=distancia.z*-1;
+    int checaX = distancia.x < c1.dimensoes.depth/2;
+    int checaZ = distancia.z < c1.dimensoes.width/2;
+    printf("%.2f %.2f %.2f - %.2f\n",distancia.x,distancia.y,distancia.z,vetor_calculaModulo(distancia));
+    return checaX && checaZ;
 }
