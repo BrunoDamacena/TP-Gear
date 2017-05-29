@@ -101,7 +101,18 @@ void atualiza(int idx){
     while(_l != NULL){
         if(checaColisao(_l->carro, carro)){
             printf("Faliceu\n");
-            exit(0);
+            eyeX=0;
+            eyeY=10;
+            eyeZ=-25;
+            centerX=0;
+            centerY=0;
+            centerZ=0;
+            upX=0;
+            upY=1;
+            upZ=0;
+            carro.posicao.x = 0;
+            carro.posicao.y = 0;
+            carro.posicao.z = 0;
         }
         _l = _l->proximo;
     }
