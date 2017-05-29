@@ -5,3 +5,6 @@ typedef struct vetor{
 typedef struct dimensoes{
     double width, height, depth;
 } Dimensoes;
+
+
+double vetor_calculaModulo(Vetor v);

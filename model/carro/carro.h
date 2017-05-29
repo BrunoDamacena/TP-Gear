@@ -1,5 +1,7 @@
 typedef struct roda{
     double raio;
+    double espessura;
+    int textura;
 } Roda;
 
 typedef struct carro{
@@ -22,3 +24,5 @@ void carro_desenhaCarro();
 
 ListaCarro *listacarro_adicionaCarro(ListaCarro *lista, Carro carro);
 ListaCarro *listacarro_deletaCarro(ListaCarro *lista, Carro *carro);
+
+int checaColisao(Carro c1, Carro c2);

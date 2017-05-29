@@ -97,8 +97,17 @@ void atualizaPosicao(){
 }
 
 void atualiza(int idx){
+    ListaCarro *_l = listaCarros;
+    while(_l != NULL){
+        if(checaColisao(_l->carro, carro)){
+            printf("Faliceu\n");
+            exit(0);
+        }
+        _l = _l->proximo;
+    }
     comandos();
     atualizaPosicao();
+
     glLoadIdentity();
     gluLookAt(eyeX,eyeY,eyeZ,centerX,centerY,centerZ,upX,upY,upZ);
     glPopMatrix();
@@ -147,13 +156,13 @@ void inicializa(void){
             if(k%3 == 1){
                 gameMatrix[0][k] = 0;
                 gameMatrix[1][k] = 1;
-                gameMatrix[2][k] = 1;             
+                gameMatrix[2][k] = 1;
             }
 
             if(k%3 == 2){
                 gameMatrix[0][k] = 1;
                 gameMatrix[1][k] = 1;
-                gameMatrix[2][k] = 0;             
+                gameMatrix[2][k] = 0;
             }
         }
     }

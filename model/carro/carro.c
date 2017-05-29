@@ -9,9 +9,9 @@
 Carro carro_criaCarro(){
     Carro _novoCarro;
 
-    _novoCarro.dimensoes.width = 64;
-    _novoCarro.dimensoes.height = 64;
-    _novoCarro.dimensoes.depth = 64;
+    _novoCarro.dimensoes.width = 10;
+    _novoCarro.dimensoes.height = 4;
+    _novoCarro.dimensoes.depth = 4.5;
     _novoCarro.posicao.x = 0;
     _novoCarro.posicao.y = 0;
     _novoCarro.posicao.z = 0;
@@ -61,7 +61,7 @@ void carro_desenhaCarro(Carro *carro, int corR, int corG, int corB){
     glTranslated(carro->posicao.x-(4.5/2),carro->posicao.y+0.5,carro->posicao.z);
     glRotated(90+carro->inclinacao,0,1,0);
     //desenha lado
-    glColor3f(corR,corG,corB); 
+    glColor3f(corR,corG,corB);
 
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_BLEND);
@@ -113,7 +113,7 @@ void carro_desenhaCarro(Carro *carro, int corR, int corG, int corB){
     glBindTexture(GL_TEXTURE_2D, carro->textura[1]);
 
     //desenha tras
-    glColor3f(corR,corG,corB); 
+    glColor3f(corR,corG,corB);
     glBegin(GL_TRIANGLE_FAN);
         glTexCoord2f(1, 0); glVertex3f(10,0,0);
         glTexCoord2f(1, 1); glVertex3f(10,3,0);
@@ -124,8 +124,7 @@ void carro_desenhaCarro(Carro *carro, int corR, int corG, int corB){
     glBindTexture(GL_TEXTURE_2D, carro->textura[2]);
 
     //desenha vidro de tras
-
-    glColor3f(1,1,1); 
+    glColor3f(1,1,1);
     glBegin(GL_TRIANGLE_FAN);
         glTexCoord2f(1, 0); glVertex3f(10,3,0);
         glTexCoord2f(1, 1); glVertex3f(8,4,0);
@@ -133,12 +132,10 @@ void carro_desenhaCarro(Carro *carro, int corR, int corG, int corB){
         glTexCoord2f(0, 0); glVertex3f(10,3,4.5);
     glEnd();
 
-
     glBindTexture(GL_TEXTURE_2D, carro->textura[3]);
 
     //desenha teto
-
-    glColor3f(corR,corG,corB); 
+    glColor3f(corR,corG,corB);
     glBegin(GL_TRIANGLE_FAN);
         glTexCoord2f(1, 0); glVertex3f(5,4,4.5);
         glTexCoord2f(1, 1); glVertex3f(8,4,4.5);
@@ -146,17 +143,14 @@ void carro_desenhaCarro(Carro *carro, int corR, int corG, int corB){
         glTexCoord2f(0, 0); glVertex3f(5,4,0);
     glEnd();
 
-
     //desenha capo
-    glColor3f(corR,corG,corB); 
+    glColor3f(corR,corG,corB);
     glBegin(GL_TRIANGLE_FAN);
         glTexCoord2f(1, 0); glVertex3f(0,2,4.5);
         glTexCoord2f(1, 1); glVertex3f(2.5,2,4.5);
         glTexCoord2f(0, 1); glVertex3f(2.5,2,0);
         glTexCoord2f(0, 0); glVertex3f(0,2,0);
     glEnd();
-
-
 
     glDisable(GL_BLEND);
 
@@ -185,4 +179,12 @@ ListaCarro *listacarro_deletaCarro(ListaCarro *lista, Carro *carro){
         lista = lista->proximo;
     }
     return _primeiroElemento; // Caso não tenha encontrado nada só retorna o primeiro elemento
+}
+
+int checaColisao(Carro c1, Carro c2){
+    Vetor distancia;
+    distancia.x = c1.posicao.x - c2.posicao.x;
+    distancia.y = c1.posicao.y - c2.posicao.y;
+    distancia.z = c1.posicao.z - c2.posicao.z;
+    return (vetor_calculaModulo(distancia)<=0);
 }
