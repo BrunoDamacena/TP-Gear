@@ -15,6 +15,7 @@
 
 #define radianoParaGraus(radianos) (radianos * (180.0 / M_PI))
 #define grausParaRadianos(graus) ((graus * M_PI) / 180.0)
+#define a_value 328
 
 // Objetos
 Pista pista;
@@ -61,6 +62,7 @@ void desenhaCena(void){
         glPushMatrix();
             //glTranslatef(_carros->carro.posicao.x, _carros->carro.posicao.y, _carros->carro.posicao.z-(_carros->carro.dimensoes.depth));
             carro_desenhaCarro(&(_carros->carro), (float)(count%3 +1)/4, (float)(count%5 +1)/6, (float)(count%2 +1)/3);
+
         glPopMatrix();
         _carros = _carros->proximo;
     }
@@ -151,12 +153,12 @@ void solta(unsigned char key,int x, int y){
 void inicializa(void){
     int i, k;
     for(i=0;i<3;i++){
-        for(k=0;k<100;k++){
+        for(k=0;k<a_value;k++){
             gameMatrix[i][k] = 0; // Não tem nada no jogo ainda
         }
     }
 
-    for(k=0;k<100; k++){
+    for(k=0;k<a_value; k++){
         if(k%10 == 9){
             if(k%3 == 0){
                 gameMatrix[0][k] = 1;
@@ -186,7 +188,7 @@ void inicializa(void){
 
 
     for(i=0;i<3;i++){
-        for(k=1;k<100;k++){
+        for(k=1;k<a_value;k++){
             if(gameMatrix[i][k] == 1){
                 Carro _novoCarro = carro_criaCarro();
                 _novoCarro.posicao.x = (i-1)*(pista.dimensoes.width);
